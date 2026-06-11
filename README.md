@@ -80,5 +80,3 @@ Through this project I gained hands-on experience with:
 * Creating interactive ML applications with Streamlit
 
 
-Darun A.
-First-Year Engineering Student | Machine Learning Enthusiast
