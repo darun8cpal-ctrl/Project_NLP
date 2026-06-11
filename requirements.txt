@@ -3,4 +3,4 @@ joblib
 nltk
 yfinance
 scikit-learn
-gdown
+
