@@ -54,11 +54,11 @@ The project was built to explore how traditional Natural Language Processing tec
 
 Input Headline:
 
-"iPhone sales surge unexpectedly across Asian markets"
+"Microsoft Office sales surge unexpectedly across Asian markets"
 
 Predicted Output:
 
-AAPL (Apple Inc.)
+ORC (ORACLE Inc.)
 
 ## Future Improvements
 
