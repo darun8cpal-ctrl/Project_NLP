@@ -82,7 +82,7 @@ historical_headlines = {
     ]
 }
 
-st.title("Stock Head Tracker: Your Ultimate Guide for Stock and Risk Prediction")
+st.title("Stock Head Tracker: NLP based Ticker Classifier")
 st.caption("Empirical Bayesian Text-Quantification Engine | 73% Macro Precision Framework")
 st.markdown("---")
 
