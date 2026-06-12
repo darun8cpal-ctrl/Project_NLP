@@ -1,82 +1,93 @@
 # Stock Head Tracker
 
-Stock Head Tracker is an NLP-based machine learning application that predicts the most relevant stock ticker from a financial news headline.
+An NLP-based machine learning application that classifies financial news headlines to their most relevant stock ticker. Built to explore how traditional Natural Language Processing techniques can extract meaningful signals from financial text data.
 
-The project was built to explore how traditional Natural Language Processing techniques can be used to extract meaningful information from financial text data and perform real-time classification.
+**[Live App](https://projectnlp-roep8upftaifwpsehkwyta.streamlit.app)**
 
-## Features
+---
 
-* Financial headline classification
-* Text preprocessing and tokenization
-* Stopword removal and cleaning
-* Bag-of-Words feature extraction
-* TF-IDF weighting
-* Multinomial Naive Bayes classification
-* Streamlit web interface
-* Real-time prediction and company lookup
+## What It Does
 
-## Project Workflow
+Given a financial news headline as input, the model identifies which stock or asset the headline is most likely referring to and returns the corresponding ticker symbol along with the company name.
 
-1. Collect and prepare financial headline data.
-2. Clean and preprocess text.
-3. Convert text into numerical features using Bag-of-Words.
-4. Apply TF-IDF weighting.
-5. Train a Multinomial Naive Bayes classifier.
-6. Encode stock ticker labels.
-7. Save trained artifacts using Joblib.
-8. Deploy the complete pipeline using Streamlit.
+This is a **multi-class text classification problem** across approximately 3,000 stock tickers, trained on real financial news data.
 
-## Technologies Used
+---
 
-### Programming Language
+## Dataset
 
-* Python
+- **Source:** Kaggle Financial News Dataset
+- **Content:** Financial news headlines labelled with their corresponding stock tickers
+- **Scale:** ~3,000 unique ticker classes
+- **Preprocessing:** Lowercasing, punctuation removal, numeric removal, stopword filtering
 
-### Libraries
+```
 
-* Scikit-Learn
-* NLTK
-* Streamlit
-* Pandas
-* NumPy
-* Joblib
-* yFinance
+---
 
-### Machine Learning Techniques
+## Model Performance
 
-* Natural Language Processing (NLP)
-* Bag-of-Words Vectorization
-* TF-IDF Transformation
-* Multinomial Naive Bayes Classification
-* Label Encoding
+Evaluated on a held-out test set:
 
-## Example Use Case
+| Metric | Score |
+|---|---|
+| Accuracy | 42% |
+| Macro Precision | 73% |
+| Macro Recall | 39% |
+| Macro F1 | 46% |
 
-Input Headline:
+The high macro precision relative to recall reflects a class imbalance characteristic of financial news datasets — many tickers appear rarely, so the model is conservative but accurate when it does make a prediction. This is a known limitation and a direction for future improvement.
 
-"Microsoft Office sales surge unexpectedly across Asian markets"
+---
 
-Predicted Output:
+## Example
 
-ORC (ORACLE Inc.)
+**Input:**
+```
+Tesla faces supply chain disruptions at its Berlin Gigafactory
+```
 
-## Future Improvements
+**Output:**
+```
+$TSLA — Tesla, Inc.
+```
 
-* Financial sentiment analysis
-* Transformer-based NLP models
-* Confidence scoring
-* News aggregation pipeline
-* Multi-label prediction
-* Real-time market data integration
+---
 
-## Learning Outcomes
+## Project Structure
 
-Through this project I gained hands-on experience with:
+```
+Project_NLP/
+├── Project.ipynb                  # Full ML pipeline and evaluation
+├── app.py                         # Streamlit frontend
+├── stock_predictor_model.pkl      # Trained Naive Bayes model
+├── bag_of_words_transformer.pkl   # Fitted CountVectorizer
+├── tfidf_weight_transformer.pkl   # Fitted TF-IDF transformer
+├── ticker_label_encoder.pkl       # Label encoder for ticker classes
+└── requirements.txt
+```
 
-* Building complete NLP pipelines
-* Text preprocessing and feature engineering
-* Machine learning model training
-* Model serialization and deployment
-* Creating interactive ML applications with Streamlit
+---
 
+## Tech Stack
 
+- **Language:** Python
+- **ML & NLP:** Scikit-learn, NLTK
+- **Data:** Pandas, NumPy
+- **Deployment:** Streamlit, Joblib
+- **Live Market Data:** yFinance
+
+---
+
+## Limitations & Future Work
+
+- **Class imbalance** across 3,000 tickers affects recall for rare stocks
+- **Bag-of-Words** loses word order and context — transformer-based models (e.g. FinBERT) would improve performance significantly
+- **No sentiment signal** — a natural extension would be classifying bullish/bearish tone alongside ticker identification
+- Future directions: confidence scoring, multi-label prediction, real-time news feed integration
+
+---
+
+## Notes
+
+The ML pipeline, model training, and evaluation were built independently. The Streamlit frontend UI was developed with AI assistance (Gemini).
