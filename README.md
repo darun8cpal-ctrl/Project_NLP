@@ -1,93 +1,31 @@
-# Stock Head Tracker
+Stock Head Tracker
 
-An NLP-based machine learning application that classifies financial news headlines to their most relevant stock ticker. Built to explore how traditional Natural Language Processing techniques can extract meaningful signals from financial text data.
+A machine learning app that reads a financial news headline and identifies which stock it's talking about. Built using traditional NLP techniques — no transformers, no LLMs.
 
-**[Live App](https://projectnlp-roep8upftaifwpsehkwyta.streamlit.app)**
+Live App
 
----
 
-## What It Does
+What it does
 
-Given a financial news headline as input, the model identifies which stock or asset the headline is most likely referring to and returns the corresponding ticker symbol along with the company name.
+You paste in a headline like "Tesla faces supply chain disruptions at its Berlin Gigafactory" and the model returns the most likely stock ticker — in this case, $TSLA.
 
-This is a **multi-class text classification problem** across approximately 3,000 stock tickers, trained on real financial news data.
+Under the hood it cleans the text, converts it to numerical features using Bag-of-Words and TF-IDF weighting, and runs it through a Multinomial Naive Bayes classifier trained on ~3,000 stock tickers.
 
----
 
-## Dataset
+Dataset
 
-- **Source:** Kaggle Financial News Dataset
-- **Content:** Financial news headlines labelled with their corresponding stock tickers
-- **Scale:** ~3,000 unique ticker classes
-- **Preprocessing:** Lowercasing, punctuation removal, numeric removal, stopword filtering
+Kaggle Financial News Dataset — headlines labelled with their corresponding stock tickers, covering approximately 3,000 unique companies.
 
-```
 
----
+Performance
 
-## Model Performance
+Tested on a held-out split of the dataset:
 
-Evaluated on a held-out test set:
+MetricScoreAccuracy42%Macro Precision73%Macro Recall39%Macro F146%
 
-| Metric | Score |
-|---|---|
-| Accuracy | 42% |
-| Macro Precision | 73% |
-| Macro Recall | 39% |
-| Macro F1 | 46% |
+The gap between precision and recall comes down to class imbalance — many tickers appear very rarely in financial news, so the model is cautious but accurate when it does commit to a prediction.
 
-The high macro precision relative to recall reflects a class imbalance characteristic of financial news datasets — many tickers appear rarely, so the model is conservative but accurate when it does make a prediction. This is a known limitation and a direction for future improvement.
 
----
+Stack
 
-## Example
-
-**Input:**
-```
-Tesla faces supply chain disruptions at its Berlin Gigafactory
-```
-
-**Output:**
-```
-$TSLA — Tesla, Inc.
-```
-
----
-
-## Project Structure
-
-```
-Project_NLP/
-├── Project.ipynb                  # Full ML pipeline and evaluation
-├── app.py                         # Streamlit frontend
-├── stock_predictor_model.pkl      # Trained Naive Bayes model
-├── bag_of_words_transformer.pkl   # Fitted CountVectorizer
-├── tfidf_weight_transformer.pkl   # Fitted TF-IDF transformer
-├── ticker_label_encoder.pkl       # Label encoder for ticker classes
-└── requirements.txt
-```
-
----
-
-## Tech Stack
-
-- **Language:** Python
-- **ML & NLP:** Scikit-learn, NLTK
-- **Data:** Pandas, NumPy
-- **Deployment:** Streamlit, Joblib
-- **Live Market Data:** yFinance
-
----
-
-## Limitations & Future Work
-
-- **Class imbalance** across 3,000 tickers affects recall for rare stocks
-- **Bag-of-Words** loses word order and context — transformer-based models (e.g. FinBERT) would improve performance significantly
-- **No sentiment signal** — a natural extension would be classifying bullish/bearish tone alongside ticker identification
-- Future directions: confidence scoring, multi-label prediction, real-time news feed integration
-
----
-
-## Notes
-
-The ML pipeline, model training, and evaluation were built independently. The Streamlit frontend UI was developed with AI assistance (Gemini).
+Python, Scikit-learn, NLTK, Streamlit, yFinance, Joblib
